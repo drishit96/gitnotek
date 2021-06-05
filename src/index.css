@@ -2,74 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url(../node_modules/easymde/dist/easymde.min.css);
-@import url(../node_modules/highlight.js/styles/stackoverflow-dark.css);
-
 @layer components {
-  .editor-bg {
-    @apply p-4 bg-focusColor text-textColorPrimary;
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
   }
 }
 
-.CodeMirror-selectedtext {
-  @apply bg-zero bg-focusColor !important;
-}
-
-.CodeMirror-line::selection,
-.CodeMirror-line > span::selection,
-.CodeMirror-line > span > span::selection {
-  @apply bg-focusColor !important;
-}
-
-.CodeMirror-cursor {
-  @apply border-l border-r-0 w-0 border-cursorColor;
-}
-
-.prose h1 {
-  @apply text-textColorPrimary;
-}
-
-.prose strong {
-  @apply text-textColorPrimary font-extrabold;
-}
-
-.prose table > thead > tr {
-  @apply text-textColorPrimary font-extrabold;
-}
-
-.prose code {
-  @apply text-textColorPrimary font-extrabold;
-}
-
-.prose a {
-  @apply text-textColorPrimary underline;
-}
-
-.CodeMirror {
-  @apply text-textColorPrimary border-focusColor bg-bgColor;
-}
-
-.cm-s-easymde .codemirror-cursor {
-  @apply border-bgColor;
-}
-
-.editor-toolbar > * {
-  @apply text-textColorPrimary;
-}
-
-.EasyMDEContainer .CodeMirror-fullscreen,
-.editor-toolbar.fullscreen,
-.editor-toolbar > .active,
-.editor-toolbar button.active,
-.editor-toolbar > button:hover,
-.editor-preview pre,
-.editor-preview,
-.cm-s-easymde .cm-comment {
-  @apply bg-bgColor;
-}
-
-.editor-toolbar button {
-  @apply m-1;
+.ProseMirror {
+  @apply p-8;
 }
 
 :root {

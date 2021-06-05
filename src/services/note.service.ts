@@ -17,6 +17,7 @@ import FS from "@isomorphic-git/lightning-fs";
 import http from "isomorphic-git/http/web";
 import { authService } from "./auth.service";
 import { Note } from "src/Components/Note";
+import { commonService } from "./common.service";
 const fs = new FS("fs");
 
 const ROOT_DIR = "/gitnotek-notes";
@@ -118,7 +119,6 @@ export const noteService = {
           http,
           dir: ROOT_DIR,
           remote: "origin",
-          ref: "main",
           corsProxy: CORS_PROXY,
           onAuth: () => {
             const auth = authService.lookupSavedAuth();
@@ -135,12 +135,27 @@ export const noteService = {
     }
   },
 
-  async cloneRepository(url: string) {
+  async cloneRepository(url: string, userName: string, branchName: string) {
     try {
       try {
         await this.deleteDb();
         await fs.promises.mkdir(ROOT_DIR);
       } catch (error) {}
+
+      const [domainWithUsernamePassword, domainName] =
+        commonService.extractDomainFromUrl(url);
+
+      url = url.replace(
+        domainWithUsernamePassword !== domainName
+          ? domainWithUsernamePassword
+          : domainName,
+        `${userName}:${authService.getAuthTko()}@${domainName}`
+      );
+
+      if (!url.endsWith(".git")) {
+        url = url + ".git";
+      }
+
       await clone({
         fs,
         http,
@@ -148,7 +163,7 @@ export const noteService = {
         url,
         corsProxy: CORS_PROXY,
         depth: 10,
-        ref: "main",
+        ref: branchName,
         onAuth: () => {
           let auth = authService.lookupSavedAuth();
           if (auth) return auth;
@@ -219,6 +234,45 @@ export const noteService = {
       return false;
     }
   },
+
+  async saveImage(fileName: string, image: string | ArrayBuffer) {
+    try {
+      const path = `${ROOT_DIR}/.gitnotek-images/`;
+      try {
+        await fs.promises.mkdir(path);
+      } catch (error) {}
+
+      await fs.promises.writeFile(`${path}${fileName}`, image);
+      await add({
+        fs,
+        dir: ROOT_DIR,
+        filepath: `.gitnotek-images/${fileName}`,
+      });
+      console.log(
+        await status({
+          fs,
+          dir: path,
+          filepath: `.gitnotek-images/${fileName}`,
+        })
+      );
+      console.log(await fs.promises.readdir(path));
+      const isPushed = this.commitAndPush(`Upload image: ${fileName}`);
+      return isPushed;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+
+  // async fetchImageUrl(fileName: string) {
+  //   try {
+  //     const path = `/.gitnotek-images/${fileName}`;
+  //     const remote = await this.getRemote();
+  //     if (remote) {
+
+  //     }
+  //   } catch (error) {}
+  // },
 
   async setObjectNameType(
     object: string,

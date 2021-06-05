@@ -1,5 +1,5 @@
-import EasyMDE from "easymde";
-import { useEffect, useRef, useState } from "react";
+import Editor from "rich-markdown-editor";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FloatingActionIconButton from "src/Components/FloatingActionIconButton";
 import { authService } from "src/services/auth.service";
@@ -7,7 +7,7 @@ import { noteService } from "src/services/note.service";
 import TokenQueryDialog, {
   TokenQueryDialogProps,
 } from "src/Components/TokenQueryDialog";
-import hljs from "highlight.js";
+import { commonService } from "src/services/common.service";
 
 function EditNote({
   setSnackbarMsg,
@@ -15,17 +15,16 @@ function EditNote({
   setSnackbarMsg: (message: string) => void;
 }) {
   const filePaths = useParams<{ 0: string }>();
-  const [editor, setEditor] = useState<EasyMDE>();
   const [folderName, setFolderName] = useState("");
   const [title, setTitle] = useState("untitled");
-  const nodeEditorRef = useRef<HTMLTextAreaElement>(null);
-  const [noteContent, setNoteContent] = useState("");
+  const [prevContent, setPrevContent] = useState("");
+  const [content, setContent] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [token, setToken] = useState("");
   const [repositoryUrl, setRepositoryUrl] = useState("");
   const askForRepositoryUrl = false;
   const onSuccess = () => {
-    saveNote(folderName, title, editor!);
+    saveNote(folderName, title, content);
   };
 
   const tokenQueryOptions: TokenQueryDialogProps = {
@@ -39,62 +38,39 @@ function EditNote({
     onSuccess,
   };
 
-  async function saveNote(folderName: string, title: string, editor: EasyMDE) {
+  async function saveNote(folderName: string, title: string, content: string) {
     setSnackbarMsg("Saving note...");
-    await noteService.saveNote(folderName, title, editor.value());
+    await noteService.saveNote(folderName, title, content);
     setSnackbarMsg("Note saved successfully");
     window.history.go(-1);
   }
 
   useEffect(() => {
-    noteService.getRemote().then((remote) => {
-      setRepositoryUrl(remote ?? "");
-    });
+    (async () => {
+      try {
+        const remote = await noteService.getRemote();
+        setRepositoryUrl(remote ?? "");
+      } catch (error) {}
+    })();
 
-    if (!editor) {
-      if (filePaths[0]) {
-        const filePath = filePaths[0];
-        let [path, folderPath, fileName] =
-          filePath.match(new RegExp("^(.*/)([^/]*)$")) ?? [];
+    if (filePaths[0]) {
+      const filePath = filePaths[0];
+      let [path, folderPath, fileName] =
+        filePath.match(new RegExp("^(.*/)([^/]*)$")) ?? [];
 
-        fileName = fileName ?? filePaths[0].replace(".md", "");
-        path = path ?? filePaths[0].replace(".md", "");
+      fileName = fileName ?? filePaths[0].replace(".md", "");
+      path = path ?? filePaths[0].replace(".md", "");
 
-        setTitle(fileName?.replace(".md", "") ?? "untitled");
-        setFolderName(folderPath ?? "");
-        noteService.getNoteContent(path.replace(".md", "")).then((note) => {
-          setNoteContent(note);
-        });
-      }
+      setTitle(fileName?.replace(".md", "") ?? "untitled");
+      setFolderName(folderPath ?? "");
 
-      const noteEditor = nodeEditorRef.current;
-      setEditor(
-        new EasyMDE({
-          element: noteEditor!,
-          spellChecker: false,
-          previewClass: ["prose", "editor-bg"],
-          sideBySideFullscreen: false,
-          renderingConfig: {
-            singleLineBreaks: false,
-            codeSyntaxHighlighting: true,
-            hljs: hljs,
-            // sanitizerFunction: function (renderedHTML) {
-            //   return DOMPurify.sanitize(renderedHTML, { ALLOWED_TAGS: ["b"] });
-            // },
-          },
-          shortcuts: {
-            drawTable: "Cmd-Alt-T",
-          },
-          showIcons: ["code", "table"],
-        })
-      );
-    } else {
-      editor.value(noteContent);
-      if (!editor.isSideBySideActive()) {
-        EasyMDE.toggleSideBySide(editor!);
-      }
+      (async () => {
+        const note = await noteService.getNoteContent(path.replace(".md", ""));
+        setPrevContent(note);
+        setContent(note);
+      })();
     }
-  }, [editor, filePaths, noteContent]);
+  }, [filePaths]);
   return (
     <>
       <div className="bg-bgColor">
@@ -112,14 +88,26 @@ function EditNote({
           <br />
           <br />
           <b className="text-textColorPrimary">Content</b>
-          <textarea className="bg-bgColor" ref={nodeEditorRef}></textarea>
+          <Editor
+            className="border-solid border-2 border-focusColor rounded-lg"
+            value={prevContent}
+            dark={commonService.isDarkThemeEnabled()}
+            onChange={(value) => {
+              setContent(value());
+            }}
+            uploadImage={async (file) => {
+              setSnackbarMsg("Upload image isnt't supported yet");
+              return "";
+            }}
+            onShowToast={(message) => setSnackbarMsg(message)}
+          />
 
           <FloatingActionIconButton
             onClickFn={() => {
               if (repositoryUrl && !authService.isAuthenticated()) {
                 setDialogOpen(true);
               } else {
-                saveNote(folderName, title, editor!);
+                saveNote(folderName, title, content);
               }
             }}
             text="Save note"
