@@ -42,6 +42,8 @@ function NotesView({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [token, setToken] = useState("");
   const [repositoryUrl, setRepositoryUrl] = useState("");
+  const [branchName, setBranchName] = useState("main");
+  const [userName, setUserName] = useState("");
   const [selectionMode, setSelectionMode] = useState(false);
   const [checkboxes, setCheckboxes] = useState<Checkboxes>({});
   let [refreshCount, setRefreshCount] = useState(0);
@@ -73,6 +75,10 @@ function NotesView({
     askForRepositoryUrl,
     repositoryUrl,
     setRepositoryUrl,
+    branchName,
+    setBranchName,
+    userName,
+    setUserName,
     onSuccess: () => {
       try {
         if (tokenQueryContext === "SYNC") {
@@ -80,7 +86,7 @@ function NotesView({
         } else if (tokenQueryContext === "IMPORT") {
           setSyncStatus("Syncing...");
           noteService
-            .cloneRepository(repositoryUrl)
+            .cloneRepository(repositoryUrl, userName, branchName)
             .then(() => setSyncStatus("Synced"))
             .then(() => setRefreshCount(refreshCount + 1));
         } else {

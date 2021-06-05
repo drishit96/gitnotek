@@ -11,6 +11,10 @@ export interface TokenQueryDialogProps {
   askForRepositoryUrl: boolean;
   repositoryUrl: string;
   setRepositoryUrl: (url: string) => void;
+  branchName?: string;
+  setBranchName?: (name: string) => void;
+  userName?: string;
+  setUserName?: (name: string) => void;
   onSuccess: () => void;
 }
 
@@ -22,6 +26,10 @@ export default function TokenQueryDialog({
   askForRepositoryUrl,
   repositoryUrl,
   setRepositoryUrl,
+  branchName,
+  setBranchName,
+  userName,
+  setUserName,
   onSuccess,
 }: TokenQueryDialogProps) {
   const [isUrlValid, setIsUrlValid] = useState(!!repositoryUrl);
@@ -33,7 +41,7 @@ export default function TokenQueryDialog({
       message="To save your notes to your preferred git hosting service, please enter the personal access token using which the app can authenticate itself"
       showActions={true}
       validateFn={() => {
-        return (!askForRepositoryUrl || isUrlValid) && !!token;
+        return (!askForRepositoryUrl || (isUrlValid && !!userName)) && !!token;
       }}
       primaryActionFn={async () => {
         authService.setActko(token);
@@ -54,6 +62,34 @@ export default function TokenQueryDialog({
                 onChange={(e) => {
                   setRepositoryUrl(e.target.value);
                   setIsUrlValid(e.target.validity.valid);
+                }}
+              />
+            </label>
+            <br />
+
+            <label>
+              <p className="text-textColorPrimary">Branch</p>
+              <input
+                className="focus:border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-sm text-textColorPrimary bg-bgColor placeholder-gray-500 border border-gray-300 rounded-md py-2 pl-2"
+                type="text"
+                id="branchName"
+                value={branchName}
+                onChange={(e) => {
+                  setBranchName && setBranchName(e.target.value);
+                }}
+              />
+            </label>
+            <br />
+
+            <label>
+              <p className="text-textColorPrimary">Username</p>
+              <input
+                className="focus:border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-sm text-textColorPrimary bg-bgColor placeholder-gray-500 border border-gray-300 rounded-md py-2 pl-2"
+                type="text"
+                id="username"
+                value={userName}
+                onChange={(e) => {
+                  setUserName && setUserName(e.target.value);
                 }}
               />
             </label>
