@@ -95,10 +95,10 @@ function EditNote({
             onChange={(value) => {
               setContent(value());
             }}
-            uploadImage={async (file) => {
-              setSnackbarMsg("Upload image isnt't supported yet");
-              return "";
-            }}
+            // uploadImage={async (file) => {
+            //   setSnackbarMsg("Upload image isnt't supported yet");
+            //   return "";
+            // }}
             onShowToast={(message) => setSnackbarMsg(message)}
           />
 

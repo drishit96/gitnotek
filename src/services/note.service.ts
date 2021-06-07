@@ -264,16 +264,6 @@ export const noteService = {
     }
   },
 
-  // async fetchImageUrl(fileName: string) {
-  //   try {
-  //     const path = `/.gitnotek-images/${fileName}`;
-  //     const remote = await this.getRemote();
-  //     if (remote) {
-
-  //     }
-  //   } catch (error) {}
-  // },
-
   async setObjectNameType(
     object: string,
     directory: string,

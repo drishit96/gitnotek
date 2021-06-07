@@ -76,22 +76,22 @@ function CreateNote({
           onChange={(value) => {
             setContent(value());
           }}
-          uploadImage={async (file) => {
-            console.log(file);
-            const reader = new FileReader();
-            reader.readAsArrayBuffer(file);
-            reader.onloadstart = function () {
-              setSnackbarMsg("Uploading image...");
-            };
-            reader.onloadend = async function () {
-              if (reader.result) {
-                await noteService.saveImage(file.name, reader.result);
-                // await noteService.fetchImageUrl(file.name);
-                setSnackbarMsg("Image uploaded successfully");
-              }
-            };
-            return "";
-          }}
+          // uploadImage={async (file) => {
+          //   console.log(file);
+          //   const reader = new FileReader();
+          //   reader.readAsArrayBuffer(file);
+          //   reader.onloadstart = function () {
+          //     setSnackbarMsg("Uploading image...");
+          //   };
+          //   reader.onloadend = async function () {
+          //     if (reader.result) {
+          //       await noteService.saveImage(file.name, reader.result);
+          //       // await noteService.fetchImageUrl(file.name);
+          //       setSnackbarMsg("Image uploaded successfully");
+          //     }
+          //   };
+          //   return "";
+          // }}
           onShowToast={(message) => setSnackbarMsg(message)}
         />
 
