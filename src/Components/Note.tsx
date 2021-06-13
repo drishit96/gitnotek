@@ -11,6 +11,7 @@ const NoteListItem = ({ id, isFile, content, currentDirectory }: Note) => {
   return (
     <>
       <Link
+        data-id={`lnk-file${id}`}
         className="w-full"
         to={
           isFile

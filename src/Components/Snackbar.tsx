@@ -28,6 +28,7 @@ const Snackbar = ({ message }: { message: string }) => {
       >
         <div className="flex flex-col items-center">
           <div
+            data-id="snackbar"
             ref={snackbarRef}
             className="invisible p-3 mb-3 max-w-max rounded bg-gray-700 text-center text-white"
           >

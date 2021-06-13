@@ -34,7 +34,8 @@ export default function NewFolderNameDialog({
           <input
             className="focus:border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-sm text-textColorPrimary bg-bgColor placeholder-gray-500 border border-gray-300 rounded-md py-2 pl-2"
             type="text"
-            id="token"
+            id="folderName"
+            data-id="folderName"
             value={folderName}
             onChange={(e) => setFolderName(e.target.value)}
           />

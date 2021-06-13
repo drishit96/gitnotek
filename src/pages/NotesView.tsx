@@ -133,6 +133,7 @@ function NotesView({
       <br />
       <div className="flex m-auto max-w-screen-lg justify-start">
         <SecondaryIconButtonProps
+          id="btn-selectionMode"
           text={selectionMode ? "Exit selection mode" : "Enter selection mode"}
           onClickFn={() => {
             setSelectionMode(!selectionMode);
@@ -143,6 +144,7 @@ function NotesView({
 
         {selectionMode ? (
           <SecondaryIconButtonProps
+            id="btn-delete"
             text="Delete"
             onClickFn={() => deleteNotes(checkboxes, path)}
           >
@@ -151,6 +153,7 @@ function NotesView({
         ) : null}
 
         <SecondaryIconButtonProps
+          id="btn-newFolder"
           text="New folder"
           onClickFn={() => setFolderNameDialogOpen(true)}
         >
@@ -158,6 +161,7 @@ function NotesView({
         </SecondaryIconButtonProps>
 
         <SecondaryIconButtonProps
+          id="btn-importNotes"
           text="Import notes"
           onClickFn={() => {
             setTokenQueryContext("IMPORT");
