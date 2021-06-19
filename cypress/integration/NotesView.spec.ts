@@ -25,6 +25,13 @@ describe("NotesView", () => {
     cy.get("[data-id='btn-delete']").should("not.exist");
   });
 
+  it("should open create notes page on click of create button", () => {
+    cy.get("[data-id='btn-createNote']").should("be.visible");
+    // .should("be.enabled");
+    cy.get("[data-id='btn-createNote']").click({ force: true });
+    cy.url().should("include", `/create-note/`);
+  });
+
   it("should create new folder when 'New folder' button  is clicked", () => {
     const folderName = "folder1";
 
