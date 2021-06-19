@@ -23,7 +23,7 @@ function CreateNote({
   const [repositoryUrl, setRepositoryUrl] = useState("");
   const askForRepositoryUrl = false;
   const onSuccess = () => {
-    saveNote(folderPath, title, content);
+    saveNote(folderPath, title, content, true);
   };
 
   const tokenQueryOptions: TokenQueryDialogProps = {
@@ -37,11 +37,16 @@ function CreateNote({
     onSuccess,
   };
 
-  async function saveNote(folderPath: string, title: string, content: string) {
+  async function saveNote(
+    folderPath: string,
+    title: string,
+    content: string,
+    askedForPassword = false
+  ) {
     setSnackbarMsg("Saving note...");
     await noteService.saveNote(folderPath, title, content);
     setSnackbarMsg("Note saved successfully");
-    window.history.go(-1);
+    window.history.go(askedForPassword ? -2 : -1);
   }
 
   useEffect(() => {

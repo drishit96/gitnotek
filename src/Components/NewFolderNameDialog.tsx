@@ -21,7 +21,6 @@ export default function NewFolderNameDialog({
       setOpen={setFolderNameDialogOpen}
       title="Enter new folder name"
       message=""
-      showActions={true}
       validateFn={() => {
         return true;
       }}

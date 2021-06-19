@@ -39,7 +39,6 @@ export default function TokenQueryDialog({
       setOpen={setDialogOpen}
       title="Connect to your git hosting service"
       message="To save your notes to your preferred git hosting service, please enter the personal access token using which the app can authenticate itself"
-      showActions={true}
       validateFn={() => {
         return (!askForRepositoryUrl || (isUrlValid && !!userName)) && !!token;
       }}
@@ -49,7 +48,7 @@ export default function TokenQueryDialog({
         onSuccess();
       }}
     >
-      <form className="flex flex-col mt-4 mb-3">
+      <div className="flex flex-col mt-4 mb-3">
         {askForRepositoryUrl ? (
           <>
             <label>
@@ -107,7 +106,7 @@ export default function TokenQueryDialog({
             onChange={(e) => setToken(e.target.value)}
           />
         </label>
-      </form>
+      </div>
     </GenericDialog>
   );
 }
