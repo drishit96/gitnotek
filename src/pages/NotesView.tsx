@@ -216,7 +216,7 @@ function NotesView({
       </div>
 
       <Link data-id="btn-createNote" to={`/create-note/${path}`}>
-        <FloatingActionIconButton text="Create note">
+        <FloatingActionIconButton id="btn-createNote-inner" text="Create note">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
