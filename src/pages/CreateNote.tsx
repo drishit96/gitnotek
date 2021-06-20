@@ -66,7 +66,7 @@ function CreateNote({
           <input
             className="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-textColorPrimary bg-bgColor placeholder-gray-500 border border-focusColor rounded-md py-2 pl-2"
             type="text"
-            id="title"
+            data-id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -101,6 +101,7 @@ function CreateNote({
         />
 
         <FloatingActionIconButton
+          id="btn-saveNote"
           onClickFn={() => {
             if (repositoryUrl && !authService.isAuthenticated()) {
               setDialogOpen(true);

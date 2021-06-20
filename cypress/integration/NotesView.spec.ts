@@ -1,4 +1,8 @@
 describe("NotesView", () => {
+  before(() => {
+    indexedDB.deleteDatabase("fs");
+  });
+
   beforeEach(() => {
     cy.visit("http://localhost:3000/workspace/");
   });
@@ -23,6 +27,13 @@ describe("NotesView", () => {
 
   it("should not have 'Delete' button", () => {
     cy.get("[data-id='btn-delete']").should("not.exist");
+  });
+
+  it("should open create notes page on click of create button", () => {
+    cy.get("[data-id='btn-createNote']").should("be.visible");
+    // .should("be.enabled");
+    cy.get("[data-id='btn-createNote']").click({ force: true });
+    cy.url().should("include", `/create-note/`);
   });
 
   it("should create new folder when 'New folder' button  is clicked", () => {
@@ -71,5 +82,38 @@ describe("NotesView", () => {
       "Deleted notes successfully"
     );
     cy.get(`[data-id='lnk-filefolder1']`).should("not.exist");
+  });
+
+  it("should allow user to create notes", () => {
+    const fileName = "file 1";
+    const noteContent = "ok content";
+    cy.get("[data-id='btn-createNote']").click({ force: true });
+    cy.url().should("include", `/create-note`);
+    cy.get("[data-id='title']").clear().type("file 1");
+    cy.get("div[contenteditable]")
+      .type("{ctrl+a}")
+      .type("{backspace}")
+      .type(noteContent);
+    cy.get("[data-id='btn-saveNote']").click();
+    cy.get(`[data-id='lnk-file${fileName}.md']`).click();
+    cy.url().should("include", `/notes/${encodeURI(fileName)}`);
+    cy.get("div[contenteditable]").should("contain.text", noteContent);
+  });
+
+  it("should allow user to edit notes", () => {
+    const fileName = "file 1";
+    const prevContent = "ok content";
+    const newContent = ", version 2";
+    cy.get(`[data-id='lnk-file${fileName}.md']`).click();
+    cy.get("div[contenteditable]")
+      .type("{ctrl+a}")
+      .type("{rightarrow}")
+      .type(newContent);
+    cy.get("[data-id='btn-saveNote']").click();
+    cy.get(`[data-id='lnk-file${fileName}.md']`).click();
+    cy.get("div[contenteditable]").should(
+      "contain.text",
+      prevContent + newContent
+    );
   });
 });

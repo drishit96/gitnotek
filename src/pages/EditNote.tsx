@@ -108,6 +108,7 @@ function EditNote({
           />
 
           <FloatingActionIconButton
+            id="btn-saveNote"
             onClickFn={() => {
               if (repositoryUrl && !authService.isAuthenticated()) {
                 setDialogOpen(true);
