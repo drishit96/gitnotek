@@ -10,6 +10,7 @@ export interface GenericDialogProps {
   cancelActionText?: string;
   validateFn: () => boolean;
   primaryActionFn: () => void;
+  isSubmitFormDialog?: boolean;
   children?: any;
 }
 
@@ -22,6 +23,7 @@ export default function GenericDialog({
   cancelActionText = "Cancel",
   validateFn,
   primaryActionFn,
+  isSubmitFormDialog = false,
   children,
 }: GenericDialogProps) {
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
@@ -31,7 +33,9 @@ export default function GenericDialog({
     if (validateFn()) {
       primaryActionFn();
       setOpen(false);
-      window.history.pushState({}, "Gitnotek");
+      if (isSubmitFormDialog) {
+        window.history.pushState({}, "Gitnotek");
+      }
     }
   }
 

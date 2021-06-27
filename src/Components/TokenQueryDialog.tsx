@@ -47,6 +47,7 @@ export default function TokenQueryDialog({
         await noteService.setRemote(repositoryUrl);
         onSuccess();
       }}
+      isSubmitFormDialog={true}
     >
       <div className="flex flex-col mt-4 mb-3">
         {askForRepositoryUrl ? (
