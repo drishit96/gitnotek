@@ -22,7 +22,7 @@ export default function NewFolderNameDialog({
       title="Enter new folder name"
       message=""
       validateFn={() => {
-        return true;
+        return folderName.length > 0;
       }}
       primaryActionFn={async () => {
         onNameSetSuccess();
