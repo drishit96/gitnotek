@@ -12,7 +12,7 @@ const ImportIcon = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 4.2v10.3" />
+      <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
     </svg>
   );
 };
