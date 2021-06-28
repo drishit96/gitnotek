@@ -36,7 +36,7 @@ describe("NotesView", () => {
     cy.url().should("include", `/create-note/`);
   });
 
-  it("should create new folder when 'New folder' button  is clicked", () => {
+  it("should create and delete folders", () => {
     const folderName = "folder1";
 
     cy.get("[data-id='btn-newFolder']").click();
@@ -46,9 +46,9 @@ describe("NotesView", () => {
 
     cy.get(`[data-id='lnk-file${folderName}']`).click();
     cy.url().should("include", `/workspace/${folderName}`);
-  });
+    cy.go(-1);
 
-  it("should allow user to select and unselect notes and folders to delete", () => {
+    //select and unselect notes and folders to delete
     cy.get("[data-id='btn-selectionMode']").click();
     cy.get("[data-id='btn-selectionMode']").should(
       "have.text",
@@ -59,10 +59,8 @@ describe("NotesView", () => {
 
     cy.get("input[type='checkbox'][name='folder1']").uncheck();
     cy.get("input[type='checkbox'][name='folder1']").should("not.be.checked");
-  });
 
-  it("should allow user to exit selection mode", () => {
-    cy.get("[data-id='btn-selectionMode']").click();
+    //exit selection mode
     cy.get("[data-id='btn-selectionMode']").click();
     cy.get("[data-id='btn-selectionMode']").should(
       "have.text",
@@ -70,9 +68,8 @@ describe("NotesView", () => {
     );
 
     cy.get("input[type='checkbox'][name='folder1']").should("not.exist");
-  });
 
-  it("should allow user to delete selected notes and folders", () => {
+    //delete selected notes and folders
     cy.get("[data-id='btn-selectionMode']").click();
     cy.get("input[type='checkbox'][name='folder1']").check();
     cy.get("[data-id='btn-delete']").click();
@@ -84,7 +81,7 @@ describe("NotesView", () => {
     cy.get(`[data-id='lnk-filefolder1']`).should("not.exist");
   });
 
-  it("should allow user to create notes", () => {
+  it("should allow user to create and edit notes", () => {
     const fileName = "file 1";
     const noteContent = "ok content";
     cy.get("[data-id='btn-createNote']").click({ force: true });
@@ -98,10 +95,9 @@ describe("NotesView", () => {
     cy.get(`[data-id='lnk-file${fileName}.md']`).click();
     cy.url().should("include", `/notes/${encodeURI(fileName)}`);
     cy.get("div[contenteditable]").should("contain.text", noteContent);
-  });
+    cy.go(-1);
 
-  it("should allow user to edit notes", () => {
-    const fileName = "file 1";
+    //edit note
     const prevContent = "ok content";
     const newContent = ", version 2";
     cy.get(`[data-id='lnk-file${fileName}.md']`).click();
