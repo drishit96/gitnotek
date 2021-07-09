@@ -2,11 +2,7 @@ import Editor from "rich-markdown-editor";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FloatingActionIconButton from "src/Components/FloatingActionIconButton";
-import { authService } from "src/services/auth.service";
 import { noteService } from "src/services/note.service";
-import TokenQueryDialog, {
-  TokenQueryDialogProps,
-} from "src/Components/TokenQueryDialog";
 import { commonService } from "src/services/common.service";
 
 function CreateNote({
@@ -18,24 +14,6 @@ function CreateNote({
   const [folderPath, setFolderPath] = useState("");
   const [title, setTitle] = useState("untitled");
   const [content, setContent] = useState("");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [token, setToken] = useState("");
-  const [repositoryUrl, setRepositoryUrl] = useState("");
-  const askForRepositoryUrl = false;
-  const onSuccess = () => {
-    saveNote(folderPath, title, content, true);
-  };
-
-  const tokenQueryOptions: TokenQueryDialogProps = {
-    dialogOpen,
-    setDialogOpen,
-    token,
-    setToken,
-    askForRepositoryUrl,
-    repositoryUrl,
-    setRepositoryUrl,
-    onSuccess,
-  };
 
   async function saveNote(
     folderPath: string,
@@ -50,10 +28,6 @@ function CreateNote({
   }
 
   useEffect(() => {
-    noteService.getRemote().then((remote) => {
-      setRepositoryUrl(remote ?? "");
-    });
-
     setTitle("untitled");
     setFolderPath(filePath);
     setContent("");
@@ -103,11 +77,7 @@ function CreateNote({
         <FloatingActionIconButton
           id="btn-saveNote"
           onClickFn={() => {
-            if (repositoryUrl && !authService.isAuthenticated()) {
-              setDialogOpen(true);
-            } else {
-              saveNote(folderPath, title, content);
-            }
+            saveNote(folderPath, title, content);
           }}
           text="Save note"
         >
@@ -125,8 +95,6 @@ function CreateNote({
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </FloatingActionIconButton>
-
-        <TokenQueryDialog {...tokenQueryOptions} />
       </div>
     </>
   );

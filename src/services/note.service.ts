@@ -122,7 +122,7 @@ export const noteService = {
 
       let pushResult: PushResult = { ok: false, error: "", refs: {} };
       let remotes = await listRemotes({ fs, dir: ROOT_DIR });
-      if (authService.isAuthenticated() && remotes.length) {
+      if (remotes.length) {
         pushResult = await push({
           fs,
           http,

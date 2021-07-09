@@ -2,11 +2,7 @@ import Editor from "rich-markdown-editor";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FloatingActionIconButton from "src/Components/FloatingActionIconButton";
-import { authService } from "src/services/auth.service";
 import { noteService } from "src/services/note.service";
-import TokenQueryDialog, {
-  TokenQueryDialogProps,
-} from "src/Components/TokenQueryDialog";
 import { commonService } from "src/services/common.service";
 
 function EditNote({
@@ -19,24 +15,6 @@ function EditNote({
   const [title, setTitle] = useState("untitled");
   const [prevContent, setPrevContent] = useState("");
   const [content, setContent] = useState("");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [token, setToken] = useState("");
-  const [repositoryUrl, setRepositoryUrl] = useState("");
-  const askForRepositoryUrl = false;
-  const onSuccess = () => {
-    saveNote(folderName, title, content, true);
-  };
-
-  const tokenQueryOptions: TokenQueryDialogProps = {
-    dialogOpen,
-    setDialogOpen,
-    token,
-    setToken,
-    askForRepositoryUrl,
-    repositoryUrl,
-    setRepositoryUrl,
-    onSuccess,
-  };
 
   async function saveNote(
     folderName: string,
@@ -51,13 +29,6 @@ function EditNote({
   }
 
   useEffect(() => {
-    (async () => {
-      try {
-        const remote = await noteService.getRemote();
-        setRepositoryUrl(remote ?? "");
-      } catch (error) {}
-    })();
-
     if (filePaths[0]) {
       const filePath = filePaths[0];
       let [path, folderPath, fileName] =
@@ -110,11 +81,7 @@ function EditNote({
           <FloatingActionIconButton
             id="btn-saveNote"
             onClickFn={() => {
-              if (repositoryUrl && !authService.isAuthenticated()) {
-                setDialogOpen(true);
-              } else {
-                saveNote(folderName, title, content);
-              }
+              saveNote(folderName, title, content);
             }}
             text="Save note"
           >
@@ -132,8 +99,6 @@ function EditNote({
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </FloatingActionIconButton>
-
-          <TokenQueryDialog {...tokenQueryOptions} />
         </div>
       </div>
     </>
