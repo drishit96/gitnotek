@@ -109,8 +109,26 @@ function NotesView({
   useEffect(() => {
     noteService.isRemoteSet().then((isRemoteSet) => {
       setSyncStatus(isRemoteSet ? "Synced" : "Not synced");
+
+      //Pull latest changes if last pull was taken more than 5 minutes ago
+      if (isRemoteSet && noteService.getLastSync() < Date.now() - 300000) {
+        setSyncStatus("Syncing...");
+        setSnackbarMsg("Syncing notes, please wait...");
+        noteService
+          .syncNotesWithRemote()
+          .then(() => {
+            noteService.setLastSync(Date.now());
+            setSyncStatus("Synced");
+            setSnackbarMsg("Notes synced successfully");
+            setRefreshCount((refreshCount) => refreshCount + 1);
+          })
+          .catch(() => {
+            setSyncStatus("Not synced");
+            setSnackbarMsg("Sync failed. Please clear app data and try again");
+          });
+      }
     });
-  }, []);
+  }, [setSnackbarMsg]);
 
   async function deleteNotes(checkboxes: Checkboxes, path: string) {
     let filesToDelete = [];

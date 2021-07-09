@@ -24,6 +24,15 @@ const ROOT_DIR = "/gitnotek-notes";
 const CORS_PROXY = "https://cors.isomorphic-git.org";
 
 export const noteService = {
+  lastSync: Date.now() - 600000,
+  getLastSync() {
+    return this.lastSync;
+  },
+
+  setLastSync(lastSync: number) {
+    this.lastSync = lastSync;
+  },
+
   async isRemoteSet() {
     try {
       let remotes = await listRemotes({ fs, dir: ROOT_DIR });
