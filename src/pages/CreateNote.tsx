@@ -6,8 +6,10 @@ import { noteService } from "src/services/note.service";
 import { commonService } from "src/services/common.service";
 
 function CreateNote({
+  setShowBackButton,
   setSnackbarMsg,
 }: {
+  setShowBackButton: (showBackButton: boolean) => void;
   setSnackbarMsg: (message: string) => void;
 }) {
   const filePath = useParams<{ 0: string }>()[0];
@@ -32,6 +34,11 @@ function CreateNote({
     setFolderPath(filePath);
     setContent("");
   }, [filePath]);
+
+  useEffect(() => {
+    setShowBackButton(true);
+  }, [setShowBackButton]);
+
   return (
     <>
       <div className="p-4">

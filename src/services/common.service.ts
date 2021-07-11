@@ -23,6 +23,23 @@ export const commonService = {
     return false;
   },
 
+  toggleTheme() {
+    if (this.isLocalStorageEnabled()) {
+      const theme = localStorage.getItem("theme");
+      if (theme) {
+        const newTheme = theme === "dark" ? "light" : "dark";
+        localStorage.setItem("theme", newTheme);
+        document.documentElement.setAttribute("data-theme", newTheme);
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        localStorage.setItem("theme", "light");
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        localStorage.setItem("theme", "dark");
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    }
+  },
+
   extractDomainFromUrl(url: string) {
     let start = url.indexOf("://");
     let domainName = "";

@@ -21,6 +21,7 @@ module.exports = {
       },
       colors: {
         primaryColor: "var(--primary-color)",
+        focusedPrimaryColor: "var(--focused-primary-color)",
         textColorPrimary: "var(--text-color-primary)",
         textColorSecondary: "var(--text-color-secondary)",
         bgColor: "var(--bg-color)",

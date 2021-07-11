@@ -6,8 +6,10 @@ import { noteService } from "src/services/note.service";
 import { commonService } from "src/services/common.service";
 
 function EditNote({
+  setShowBackButton,
   setSnackbarMsg,
 }: {
+  setShowBackButton: (showBackButton: boolean) => void;
   setSnackbarMsg: (message: string) => void;
 }) {
   const filePaths = useParams<{ 0: string }>();
@@ -27,6 +29,10 @@ function EditNote({
     setSnackbarMsg("Note saved successfully");
     window.history.go(askedForPassword ? -2 : -1);
   }
+
+  useEffect(() => {
+    setShowBackButton(true);
+  }, [setShowBackButton]);
 
   useEffect(() => {
     if (filePaths[0]) {

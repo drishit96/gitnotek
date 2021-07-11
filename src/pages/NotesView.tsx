@@ -4,7 +4,7 @@ import { authService } from "../services/auth.service";
 import Notes from "../Components/NotesList";
 import { Link, useParams } from "react-router-dom";
 import Chip from "src/Components/Chip";
-import SecondaryIconButtonProps from "../Components/SecondaryIconButton";
+import SecondaryIconButton from "../Components/SecondaryIconButton";
 import { noteService } from "src/services/note.service";
 import TokenQueryDialog, {
   TokenQueryDialogProps,
@@ -33,8 +33,10 @@ async function setRemote(
 }
 
 function NotesView({
+  setShowBackButton,
   setSnackbarMsg,
 }: {
+  setShowBackButton: (showBackButton: boolean) => void;
   setSnackbarMsg: (message: string) => void;
 }) {
   const path = useParams<{ 0: string }>()[0];
@@ -107,6 +109,10 @@ function NotesView({
   };
 
   useEffect(() => {
+    setShowBackButton(false);
+  }, [setShowBackButton]);
+
+  useEffect(() => {
     noteService.isRemoteSet().then((isRemoteSet) => {
       setSyncStatus(isRemoteSet ? "Synced" : "Not synced");
 
@@ -149,8 +155,8 @@ function NotesView({
         Your Notes
       </h1>
       <br />
-      <div className="flex m-auto max-w-screen-lg justify-start">
-        <SecondaryIconButtonProps
+      <div className="flex m-auto max-w-screen-lg">
+        <SecondaryIconButton
           id="btn-selectionMode"
           text={selectionMode ? "Exit selection mode" : "Enter selection mode"}
           onClickFn={() => {
@@ -158,27 +164,27 @@ function NotesView({
           }}
         >
           <SelectionModeIcon />
-        </SecondaryIconButtonProps>
+        </SecondaryIconButton>
 
         {selectionMode ? (
-          <SecondaryIconButtonProps
+          <SecondaryIconButton
             id="btn-delete"
             text="Delete"
             onClickFn={() => deleteNotes(checkboxes, path)}
           >
             <DeleteIcon />
-          </SecondaryIconButtonProps>
+          </SecondaryIconButton>
         ) : null}
 
-        <SecondaryIconButtonProps
+        <SecondaryIconButton
           id="btn-newFolder"
           text="New folder"
           onClickFn={() => setFolderNameDialogOpen(true)}
         >
           <NewFolderIcon />
-        </SecondaryIconButtonProps>
+        </SecondaryIconButton>
 
-        <SecondaryIconButtonProps
+        <SecondaryIconButton
           id="btn-importNotes"
           text="Import notes"
           onClickFn={() => {
@@ -187,7 +193,7 @@ function NotesView({
           }}
         >
           <ImportIcon />
-        </SecondaryIconButtonProps>
+        </SecondaryIconButton>
 
         <div className="flex m-1 ml-auto">
           <Chip

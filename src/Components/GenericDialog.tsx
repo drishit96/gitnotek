@@ -44,7 +44,7 @@ export default function GenericDialog({
       <Dialog
         as="div"
         static
-        className="fixed z-10 inset-0 overflow-y-auto"
+        className="fixed z-20 inset-0 overflow-y-auto"
         initialFocus={children}
         open={isOpen}
         onClose={setOpen}

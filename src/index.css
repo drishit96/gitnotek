@@ -30,6 +30,7 @@
 
 :root {
   --primary-color: rgba(109, 40, 217);
+  --focused-primary-color: rgba(87,32,173);
   --text-color-primary: #424242;
   --text-color-secondary: #656565;
   --bg-color: #fff;
@@ -41,6 +42,7 @@
 
 [data-theme="dark"] {
   --primary-color: rgba(109, 40, 217);
+  --focused-primary-color: rgba(87,32,173);
   --text-color-primary: #f5f5ff;
   --text-color-secondary: #c1c1c1;
   --bg-color: #222222;
