@@ -7,7 +7,7 @@ const NavigationBar = ({ showBackButton }: { showBackButton: boolean }) => {
       <nav className="flex p-2 w-full shadow-md sticky top-0 bg-primaryColor z-20">
         {showBackButton ? (
           <SecondaryIconButton
-            id="btn-newFolder"
+            id="btn-back"
             text="Back"
             hideText={true}
             isDarkBackground={true}
@@ -36,7 +36,7 @@ const NavigationBar = ({ showBackButton }: { showBackButton: boolean }) => {
         <p className="text-white ml-5 mt-auto mb-auto">Gitnotek</p>
         <div className="flex ml-auto mt-auto mb-auto">
           <SecondaryIconButton
-            id="btn-newFolder"
+            id="btn-toggleTheme"
             text="Toggle theme"
             hideText={true}
             isDarkBackground={true}

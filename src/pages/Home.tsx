@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <>
-      <nav></nav>
       <main className="p-10 flex justify-center">
         <section className="flex flex-col items-center">
           <h3 className="text-4xl font-bold mt-5 ml-5 mr-5 mb-8 md:text-center">
-            <span className="text-textColorPrimary">Save your notes in </span>
-            <span className="text-4xl font-bold text-primaryColor">
+            <span data-id="txt-tagLine-1-1" className="text-textColorPrimary">Save your notes in </span>
+            <span data-id="txt-tagLine-1-2" className="text-4xl font-bold text-primaryColor">
               any git hosting service
             </span>
           </h3>
@@ -20,7 +19,6 @@ const Home = () => {
           </Link>
         </section>
       </main>
-      <footer></footer>
     </>
   );
 };
