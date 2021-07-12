@@ -112,8 +112,8 @@ function NotesView({
   };
 
   useEffect(() => {
-    setShowBackButton(false);
-  }, [setShowBackButton]);
+    setShowBackButton(!!path);
+  }, [setShowBackButton, path]);
 
   useEffect(() => {
     noteService.isRemoteSet().then((isRemoteSet) => {
