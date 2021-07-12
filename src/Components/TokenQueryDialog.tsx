@@ -8,6 +8,8 @@ export interface TokenQueryDialogProps {
   setDialogOpen: (open: boolean) => void;
   token: string;
   setToken: (token: string) => void;
+  isTokenRequired: boolean;
+  setIsTokenRequired: (token: boolean) => void;
   askForRepositoryUrl: boolean;
   repositoryUrl: string;
   setRepositoryUrl: (url: string) => void;
@@ -23,6 +25,8 @@ export default function TokenQueryDialog({
   setDialogOpen,
   token,
   setToken,
+  isTokenRequired,
+  setIsTokenRequired,
   askForRepositoryUrl,
   repositoryUrl,
   setRepositoryUrl,
@@ -40,7 +44,10 @@ export default function TokenQueryDialog({
       title="Connect to your git hosting service"
       message="To save your notes to your preferred git hosting service, please enter the personal access token using which the app can authenticate itself"
       validateFn={() => {
-        return (!askForRepositoryUrl || (isUrlValid && !!userName)) && !!token;
+        return (
+          (!askForRepositoryUrl || (isUrlValid && !!userName)) &&
+          (!isTokenRequired || !!token)
+        );
       }}
       primaryActionFn={async () => {
         authService.setActko(token);
@@ -100,13 +107,31 @@ export default function TokenQueryDialog({
         <label>
           <p className="text-textColorPrimary">Personal access token</p>
           <input
-            className="focus:border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-sm text-textColorPrimary bg-bgColor placeholder-gray-500 border border-gray-300 rounded-md py-2 pl-2"
+            className="focus:border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-sm text-textColorPrimary bg-bgColor placeholder-gray-500 border border-gray-300 rounded-md py-2 pl-2 disabled:opacity-50"
             type="password"
             id="token"
+            disabled={!isTokenRequired}
             value={token}
             onChange={(e) => setToken(e.target.value)}
           />
         </label>
+
+        <span className="mt-3">
+          <input
+            id="tokenNotRequiredCheckbox"
+            type="checkbox"
+            checked={!isTokenRequired}
+            onChange={(_event: { target: any }) => {
+              setIsTokenRequired(!isTokenRequired);
+            }}
+          />
+          <label
+            htmlFor="tokenNotRequiredCheckbox"
+            className="ml-1 text-sm text-textColorPrimary"
+          >
+            Token not required as it is a public repository
+          </label>
+        </span>
       </div>
     </GenericDialog>
   );

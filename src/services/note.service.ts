@@ -144,7 +144,12 @@ export const noteService = {
     }
   },
 
-  async cloneRepository(url: string, userName: string, branchName: string) {
+  async cloneRepository(
+    url: string,
+    userName: string,
+    branchName: string,
+    isTokenRequired: boolean
+  ) {
     try {
       try {
         await this.deleteDb();
@@ -154,12 +159,14 @@ export const noteService = {
       const [domainWithUsernamePassword, domainName] =
         commonService.extractDomainFromUrl(url);
 
-      url = url.replace(
-        domainWithUsernamePassword !== domainName
-          ? domainWithUsernamePassword
-          : domainName,
-        `${userName}:${authService.getAuthTko()}@${domainName}`
-      );
+      if (isTokenRequired) {
+        url = url.replace(
+          domainWithUsernamePassword !== domainName
+            ? domainWithUsernamePassword
+            : domainName,
+          `${userName}:${authService.getAuthTko()}@${domainName}`
+        );
+      }
 
       if (!url.endsWith(".git")) {
         url = url + ".git";
