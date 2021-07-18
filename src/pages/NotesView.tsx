@@ -16,6 +16,7 @@ import NewFolderNameDialog, {
   NewFolderNameDialogProps,
 } from "src/Components/NewFolderNameDialog";
 import ImportIcon from "src/Icons/Import";
+import Breadcrumb from "src/Components/Breadcrumb";
 
 export interface Checkboxes {
   [key: string]: { isFile: boolean; isChecked: boolean };
@@ -91,7 +92,12 @@ function NotesView({
         } else if (tokenQueryContext === "IMPORT") {
           setSyncStatus("Syncing...");
           noteService
-            .cloneRepository(repositoryUrl, userName, branchName, isTokenRequired)
+            .cloneRepository(
+              repositoryUrl,
+              userName,
+              branchName,
+              isTokenRequired
+            )
             .then(() => setSyncStatus("Synced"))
             .then(() => setRefreshCount(refreshCount + 1));
         } else {
@@ -233,6 +239,7 @@ function NotesView({
       <br />
 
       <div className="flex flex-col m-auto max-w-screen-lg min-h-screen">
+        <Breadcrumb path={path} />
         <Notes
           selectionMode={selectionMode}
           directory={path}
