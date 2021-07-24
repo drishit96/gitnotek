@@ -357,7 +357,6 @@ export const noteService = {
       fs,
       http,
       dir: ROOT_DIR,
-      ref: "main",
       singleBranch: true,
       author: {
         name: "Gitnotek",
@@ -369,7 +368,21 @@ export const noteService = {
         else return { cancel: true };
       },
     });
-    console.log(await fs.promises.readdir(ROOT_DIR));
+    try {
+      await push({
+        fs,
+        http,
+        dir: ROOT_DIR,
+        force: true,
+        onAuth: () => {
+          const auth = authService.lookupSavedAuth();
+          if (auth) return auth;
+          else return { cancel: true };
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   async getUnstagedFiles() {
