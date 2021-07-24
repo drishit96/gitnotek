@@ -26,18 +26,19 @@ const Breadcrumb = ({ path }: { path: string }) => {
       <div className="w-full p-2">
         {pathLinks.map((link) => {
           return (
-            <>
-              <span className="text-textColorPrimary">
-                <Link
-                  data-id={`brc-lnk-${encodeURI(link.location)}`}
-                  className="underline"
-                  to={link.location}
-                >
-                  {" " + link.name}
-                </Link>{" "}
-                /
-              </span>
-            </>
+            <span
+              key={`brc-lnk-${encodeURI(link.location)}`}
+              className="text-textColorPrimary"
+            >
+              <Link
+                data-id={`brc-lnk-${encodeURI(link.location)}`}
+                className="underline"
+                to={link.location}
+              >
+                {" " + link.name}
+              </Link>{" "}
+              /
+            </span>
           );
         })}
       </div>
