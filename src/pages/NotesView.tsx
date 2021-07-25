@@ -126,7 +126,11 @@ function NotesView({
       setSyncStatus(isRemoteSet ? "Synced" : "Not synced");
 
       //Pull latest changes if last pull was taken more than 5 minutes ago
-      if (isRemoteSet && noteService.getLastSync() < Date.now() - 300000) {
+      if (
+        window.navigator.onLine &&
+        isRemoteSet &&
+        noteService.getLastSync() < Date.now() - 300000
+      ) {
         setSyncStatus("Syncing...");
         setSnackbarMsg("Syncing notes, please wait...");
         noteService
