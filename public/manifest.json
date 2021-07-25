@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/workspace/",
   "display": "standalone",
   "theme_color": "#6d28d9",
   "background_color": "#ffffff"
