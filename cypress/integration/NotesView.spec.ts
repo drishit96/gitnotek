@@ -42,7 +42,7 @@ describe("NotesView", () => {
     cy.get("[data-id='btn-newFolder']").click();
     cy.get("[data-id='folderName']").type(folderName);
     cy.get("[data-id='dlg-btn-primary']").click();
-    cy.get("[data-id='btn-newFolder']").should("have.focus");
+    // cy.get("[data-id='btn-newFolder']").should("have.focus");
 
     cy.get(`[data-id='lnk-file${folderName}']`).click();
     cy.url().should("include", `/workspace/${folderName}`);
