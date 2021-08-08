@@ -17,6 +17,7 @@ import NewFolderNameDialog, {
 } from "src/Components/NewFolderNameDialog";
 import ImportIcon from "src/Icons/Import";
 import Breadcrumb from "src/Components/Breadcrumb";
+import { TeachingBubble } from "@fluentui/react/lib/TeachingBubble";
 
 export interface Checkboxes {
   [key: string]: { isFile: boolean; isChecked: boolean };
@@ -54,6 +55,7 @@ function NotesView({
   const [folderName, setFolderName] = useState("");
   const [folderNameDialogOpen, setFolderNameDialogOpen] = useState(false);
   const [tokenQueryContext, setTokenQueryContext] = useState("SYNC");
+  const [askUserToImportNotes, setAskUserToImportNotes] = useState(false);
   const askForRepositoryUrl = true;
 
   const onNameSetSuccess = async () => {
@@ -117,6 +119,15 @@ function NotesView({
     onNameSetSuccess,
   };
 
+  const importButtonPromptProps = {
+    children: "Import notes",
+    onClick: () => {
+      setAskUserToImportNotes(false);
+      setTokenQueryContext("IMPORT");
+      setDialogOpen(true);
+    },
+  };
+
   useEffect(() => {
     setShowBackButton(!!path);
   }, [setShowBackButton, path]);
@@ -124,6 +135,7 @@ function NotesView({
   useEffect(() => {
     noteService.isRemoteSet().then((isRemoteSet) => {
       setSyncStatus(isRemoteSet ? "Synced" : "Not synced");
+      setAskUserToImportNotes(!isRemoteSet);
 
       //Pull latest changes if last pull was taken more than 5 minutes ago
       if (
@@ -207,6 +219,18 @@ function NotesView({
         >
           <ImportIcon />
         </SecondaryIconButton>
+
+        {askUserToImportNotes && (
+          <TeachingBubble
+            target="[data-id='btn-importNotes']"
+            primaryButtonProps={importButtonPromptProps}
+            onDismiss={() => setAskUserToImportNotes(false)}
+            headline="Let's import your notes"
+          >
+            Connect to your git repository and we will import your notes from
+            it.
+          </TeachingBubble>
+        )}
 
         <div className="flex m-1 ml-auto">
           <Chip

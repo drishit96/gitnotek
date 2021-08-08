@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { Routes } from "./Routes";
 
 if (
@@ -14,6 +14,10 @@ if (
 } else {
   document.documentElement.setAttribute("data-theme", "light");
 }
+
+//Prevents loading segoe ui font by default from fabric ui code
+const win = window as any;
+win.FabricConfig = { fontBaseUrl: "" };
 
 ReactDOM.render(
   <React.StrictMode>
