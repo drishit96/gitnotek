@@ -74,6 +74,10 @@ describe("NotesView", () => {
     cy.get("input[type='checkbox'][name='folder1']").check();
     cy.get("[data-id='btn-delete']").click();
 
+    cy.get("[data-id='dlg-title']").should("have.text", "Delete selected notes?")
+    cy.get("[data-id='dlg-message']").should("have.text", "Selected notes will be deleted. If you want to view the deleted notes, you can check the commit history.")
+    cy.get("[data-id='dlg-btn-primary']").click();
+
     cy.get("[data-id='snackbar'").should(
       "have.text",
       "Deleted notes successfully"

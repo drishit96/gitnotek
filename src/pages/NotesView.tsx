@@ -18,6 +18,7 @@ import NewFolderNameDialog, {
 import ImportIcon from "src/Icons/Import";
 import Breadcrumb from "src/Components/Breadcrumb";
 import { TeachingBubble } from "@fluentui/react/lib/TeachingBubble";
+import GenericDialog from "src/Components/GenericDialog";
 
 export interface Checkboxes {
   [key: string]: { isFile: boolean; isChecked: boolean };
@@ -57,6 +58,10 @@ function NotesView({
   const [tokenQueryContext, setTokenQueryContext] = useState("SYNC");
   const [askUserToImportNotes, setAskUserToImportNotes] = useState(false);
   const askForRepositoryUrl = true;
+  const [
+    deleteNotesConfirmationOpenDialog,
+    setDeleteNotesConfirmationOpenDialog,
+  ] = useState(false);
 
   const onNameSetSuccess = async () => {
     try {
@@ -195,7 +200,7 @@ function NotesView({
           <SecondaryIconButton
             id="btn-delete"
             text="Delete"
-            onClickFn={() => deleteNotes(checkboxes, path)}
+            onClickFn={() => setDeleteNotesConfirmationOpenDialog(true)}
           >
             <DeleteIcon />
           </SecondaryIconButton>
@@ -297,6 +302,15 @@ function NotesView({
       </Link>
       <TokenQueryDialog {...tokenQueryOptions} />
       <NewFolderNameDialog {...newFolderNameDialogOptions} />
+      <GenericDialog
+        isOpen={deleteNotesConfirmationOpenDialog}
+        setOpen={setDeleteNotesConfirmationOpenDialog}
+        title="Delete selected notes?"
+        message="Selected notes will be deleted. If you want to view the deleted notes, you can check the commit history."
+        primaryActionText = "Delete"
+        validateFn={() => true}
+        primaryActionFn={() => deleteNotes(checkboxes, path)}
+      ></GenericDialog>
     </main>
   );
 }

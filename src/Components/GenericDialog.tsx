@@ -83,13 +83,14 @@ export default function GenericDialog({
               className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 inline-block align-bottom bg-bgColorEl1 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
             >
               <Dialog.Title
+                data-id="dlg-title"
                 as="h3"
                 className="text-lg leading-6 font-semibold text-textColorPrimary"
               >
                 {title}
               </Dialog.Title>
               <div className="mt-2">
-                <p className="text-sm text-textColorSecondary whitespace-pre-line text-left">
+                <p data-id="dlg-message" className="text-sm text-textColorSecondary whitespace-pre-line text-left">
                   {message}
                 </p>
               </div>
