@@ -108,8 +108,8 @@ describe("NotesView", () => {
     cy.get("div[contenteditable]")
       .type("{ctrl+a}")
       .type("{rightarrow}")
-      .type(newContent);
-    cy.get("[data-id='btn-saveNote']").click();
+      .type(newContent)
+      .type("{ctrl+s}");
     cy.get(`[data-id='lnk-file${fileName}.md']`).click();
     cy.get("div[contenteditable]").should(
       "contain.text",

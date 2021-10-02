@@ -29,6 +29,13 @@ function CreateNote({
     window.history.go(askedForPassword ? -2 : -1);
   }
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 83) {
+      event.preventDefault();
+      saveNote(folderPath, title, content);
+    }
+  }
+
   useEffect(() => {
     setTitle("untitled");
     setFolderPath(filePath);
@@ -41,7 +48,7 @@ function CreateNote({
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4" onKeyDown={handleKeyDown}>
         <label>
           <b className="text-textColorPrimary">Title</b>
           <input
