@@ -30,6 +30,13 @@ function EditNote({
     window.history.go(askedForPassword ? -2 : -1);
   }
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 83) {
+      event.preventDefault();
+      saveNote(folderName, title, content);
+    }
+  }
+
   useEffect(() => {
     setShowBackButton(true);
   }, [setShowBackButton]);
@@ -55,7 +62,7 @@ function EditNote({
   }, [filePaths]);
   return (
     <>
-      <div className="bg-bgColor">
+      <div className="bg-bgColor" onKeyDown={handleKeyDown}>
         <div className="p-4">
           <label>
             <b className="text-textColorPrimary">Title</b>
