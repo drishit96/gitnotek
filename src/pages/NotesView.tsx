@@ -67,13 +67,13 @@ function NotesView({
     try {
       await noteService.createFolder(path, folderName);
       setRefreshCount(refreshCount + 1);
-    } catch (error) {
+    } catch (error: any) {
       if (error.message === "INVALID") {
-        console.log("Folder name cannot be empty");
+        setSnackbarMsg("Folder name cannot be empty");
       } else if (error.message === "EEXIST") {
-        console.log("Folder already exists");
+        setSnackbarMsg("Folder already exists");
       } else if (error.message === "ENOENT") {
-        console.log("Folder could not be created");
+        setSnackbarMsg("Folder could not be created. Please try again.");
       }
     }
   };
