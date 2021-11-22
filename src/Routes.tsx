@@ -17,38 +17,40 @@ export const Routes = () => {
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <NetworkStatusIndicator />
-        <NavigationBar showBackButton={showBackButton}></NavigationBar>
         <Switch>
           <Route exact path="/" children={<Home />}></Route>
-          <Route
-            exact
-            path="/workspace/*"
-            children={
-              <NotesView
-                setShowBackButton={setShowBackButton}
-                setSnackbarMsg={setSnackbarMsg}
-              />
-            }
-          ></Route>
-          <Route
-            exact
-            path="/create-note/*"
-            children={
-              <CreateNote
-                setShowBackButton={setShowBackButton}
-                setSnackbarMsg={setSnackbarMsg}
-              />
-            }
-          ></Route>
-          <Route
-            path="/notes/*"
-            children={
-              <EditNote
-                setShowBackButton={setShowBackButton}
-                setSnackbarMsg={setSnackbarMsg}
-              />
-            }
-          ></Route>
+          <>
+            <NavigationBar showBackButton={showBackButton}></NavigationBar>
+            <Route
+              exact
+              path="/workspace/*"
+              children={
+                <NotesView
+                  setShowBackButton={setShowBackButton}
+                  setSnackbarMsg={setSnackbarMsg}
+                />
+              }
+            ></Route>
+            <Route
+              exact
+              path="/create-note/*"
+              children={
+                <CreateNote
+                  setShowBackButton={setShowBackButton}
+                  setSnackbarMsg={setSnackbarMsg}
+                />
+              }
+            ></Route>
+            <Route
+              path="/notes/*"
+              children={
+                <EditNote
+                  setShowBackButton={setShowBackButton}
+                  setSnackbarMsg={setSnackbarMsg}
+                />
+              }
+            ></Route>
+          </>
         </Switch>
       </Suspense>
       <Snackbar message={snackbarMsg} />

@@ -25,7 +25,7 @@ const Chip = ({ text, color, onClickFn, children }: ChipProps) => {
       onClick={onClickFn}
       className={`z-10 px-2 max-w-sm border-2 ${getBorderColor(
         color
-      )} ${getBgColor(color)} text-primaryColor rounded-3xl flex items-center`}
+      )} ${getBgColor(color)} text-primaryColor rounded-3xl flex items-center animate-fadeInLeft`}
     >
       {children}
       <p className={`ml-1 text-sm ${getTextColor(color)}`}>{text}</p>

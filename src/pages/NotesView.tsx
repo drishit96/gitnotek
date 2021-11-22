@@ -181,7 +181,7 @@ function NotesView({
 
   return (
     <main className="p-4">
-      <h1 className="pt-2 text-2xl text-center text-textColorPrimary">
+      <h1 className="pt-2 text-2xl text-center text-textColorPrimary animate-fadeInLeft">
         Your Notes
       </h1>
       <br />
@@ -307,7 +307,7 @@ function NotesView({
         setOpen={setDeleteNotesConfirmationOpenDialog}
         title="Delete selected notes?"
         message="Selected notes will be deleted. If you want to view the deleted notes, you can check the commit history."
-        primaryActionText = "Delete"
+        primaryActionText="Delete"
         validateFn={() => true}
         primaryActionFn={() => deleteNotes(checkboxes, path)}
       ></GenericDialog>

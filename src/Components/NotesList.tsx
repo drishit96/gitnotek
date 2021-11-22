@@ -62,10 +62,10 @@ const NotesList = ({
             return (
               <div
                 key={note.id}
-                className="flex p-0.5 border-b border-focusColor cursor-pointer overflow-hidden overflow-ellipsis hover:bg-focusColor"
+                className={`flex p-0.5 border-b border-focusColor cursor-pointer overflow-hidden overflow-ellipsis hover:bg-focusColor ${selectionMode ? "animate-fadeInLeft" : "animate-fadeInLeft"}`}
               >
                 {selectionMode ? (
-                  <div className="flex items-center p-5">
+                  <div className="flex items-center p-5 animate-fadeInLeft">
                     <input
                       type="checkbox"
                       name={note.id}

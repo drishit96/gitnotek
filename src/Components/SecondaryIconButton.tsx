@@ -24,7 +24,7 @@ const SecondaryIconButton = ({
         isDarkBackground
           ? "border-focusedPrimaryColor hover:bg-focusedPrimaryColor text-white"
           : "border-2 border-focusColor hover:bg-focusColor text-primaryColor"
-      } rounded-3xl flex items-center`}
+      } rounded-3xl flex items-center animate-fadeInLeft`}
     >
       {children}
       {!hideText ? (

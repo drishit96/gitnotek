@@ -15,7 +15,7 @@ const FloatingActionIconButton = ({
     <button
       data-id={id}
       onClick={onClickFn}
-      className="z-10 p-3 max-w-sm fixed bottom-0 right-0 mx-8 my-8 hover:shadow-xl text-white bg-primaryColor rounded-3xl shadow-md flex items-center"
+      className="z-10 p-3 max-w-sm fixed bottom-0 right-0 mx-8 my-8 hover:shadow-xl text-white bg-primaryColor rounded-3xl shadow-md flex items-center animate-fadeIn"
     >
       {children}
       <p className="ml-2 text-base">{text}</p>
