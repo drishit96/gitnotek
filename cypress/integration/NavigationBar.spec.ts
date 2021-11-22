@@ -11,11 +11,18 @@ describe("NavigationBar test", () => {
   });
 
   it("should allow user to toggle theme", () => {
+    cy.visit("http://localhost:3000/create-note/");
     cy.get("[data-id='btn-toggleTheme']").click();
+    cy.get("[data-id='btn-back']").click();
+
     cy.get("[data-id='txt-tagLine-1-1'")
       .should("have.css", "color")
       .and("eq", "rgb(245, 245, 255)");
+
+    cy.visit("http://localhost:3000/create-note/");
     cy.get("[data-id='btn-toggleTheme']").click();
+    cy.get("[data-id='btn-back']").click();
+
     cy.get("[data-id='txt-tagLine-1-1'")
       .should("have.css", "color")
       .and("eq", "rgb(66, 66, 66)");
