@@ -1,8 +1,14 @@
+enum AnimateDirection {
+  leftToRight,
+  rightToLeft
+}
+
 interface SecondaryIconButtonProps {
   id: string;
   text: string;
   hideText?: boolean;
   isDarkBackground?: boolean;
+  animate?: AnimateDirection;
   onClickFn?: () => void;
   children: any;
 }
@@ -12,6 +18,7 @@ const SecondaryIconButton = ({
   text,
   hideText,
   isDarkBackground,
+  animate,
   onClickFn,
   children,
 }: SecondaryIconButtonProps) => {
@@ -24,7 +31,9 @@ const SecondaryIconButton = ({
         isDarkBackground
           ? "border-focusedPrimaryColor hover:bg-focusedPrimaryColor text-white"
           : "border-2 border-focusColor hover:bg-focusColor text-primaryColor"
-      } rounded-3xl flex items-center animate-fadeInLeft`}
+      } rounded-3xl flex items-center ${
+        animate === AnimateDirection.leftToRight ? "animate-fadeInLeft" : "animate-fadeInRight"
+      }`}
     >
       {children}
       {!hideText ? (
@@ -40,4 +49,4 @@ const SecondaryIconButton = ({
   );
 };
 
-export default SecondaryIconButton;
+export { AnimateDirection, SecondaryIconButton };

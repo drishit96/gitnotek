@@ -1,5 +1,5 @@
 import { commonService } from "src/services/common.service";
-import SecondaryIconButton from "./SecondaryIconButton";
+import { SecondaryIconButton } from "./SecondaryIconButton";
 
 const NavigationBar = ({ showBackButton }: { showBackButton: boolean }) => {
   return (

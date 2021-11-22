@@ -4,7 +4,7 @@ import { authService } from "../services/auth.service";
 import Notes from "../Components/NotesList";
 import { Link, useParams } from "react-router-dom";
 import Chip from "src/Components/Chip";
-import SecondaryIconButton from "../Components/SecondaryIconButton";
+import { AnimateDirection, SecondaryIconButton } from "../Components/SecondaryIconButton";
 import { noteService } from "src/services/note.service";
 import TokenQueryDialog, {
   TokenQueryDialogProps,
@@ -181,7 +181,7 @@ function NotesView({
 
   return (
     <main className="p-4">
-      <h1 className="pt-2 text-2xl text-center text-textColorPrimary animate-fadeInLeft">
+      <h1 className="pt-2 text-2xl text-center text-textColorPrimary animate-fadeInRight">
         Your Notes
       </h1>
       <br />
@@ -200,6 +200,7 @@ function NotesView({
           <SecondaryIconButton
             id="btn-delete"
             text="Delete"
+            animate={AnimateDirection.leftToRight}
             onClickFn={() => setDeleteNotesConfirmationOpenDialog(true)}
           >
             <DeleteIcon />

@@ -11,6 +11,7 @@ module.exports = {
         fadeIn: "fadein 0.4s forwards",
         fadeInDelay50ms: "fadein 0.4s .15s forwards",
         fadeInLeft: "fadein-left 0.4s forwards",
+        fadeInRight: "fadein-right 0.4s forwards",
         fadeInOut: "fadein 0.3s, fadeout 0.3s 2.5s",
         type: `typing 1.5s steps(10, end), 
         blink-caret .75s step-end infinite`,
@@ -43,6 +44,10 @@ module.exports = {
         },
         "fadein-left": {
           "0%": { transform: "translateX(-30px)", opacity: 0 },
+          "100%": { transform: "translateX(0)", opacity: 1 },
+        },
+        "fadein-right": {
+          "0%": { transform: "translateX(30px)", opacity: 0 },
           "100%": { transform: "translateX(0)", opacity: 1 },
         },
         typing: {

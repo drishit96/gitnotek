@@ -62,7 +62,7 @@ const NotesList = ({
             return (
               <div
                 key={note.id}
-                className={`flex p-0.5 border-b border-focusColor cursor-pointer overflow-hidden overflow-ellipsis hover:bg-focusColor ${selectionMode ? "animate-fadeInLeft" : "animate-fadeInLeft"}`}
+                className={`flex p-0.5 border-b border-focusColor cursor-pointer overflow-hidden overflow-ellipsis hover:bg-focusColor animate-fadeInRight`}
               >
                 {selectionMode ? (
                   <div className="flex items-center p-5 animate-fadeInLeft">
